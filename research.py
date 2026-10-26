@@ -32,12 +32,11 @@ def scrape_website(url: str) -> str:
         return ""
 
 def duckduckgo_scrape(topic: str, count: int = 5, raw_text_only: bool = False) -> Union[str, List[Dict]]:
-    query = topic.replace(" ", "+")
-    url = f"https://html.duckduckgo.com/html/?q={query}"
+    url = "https://html.duckduckgo.com/html/"
     headers = {"User-Agent": "Mozilla/5.0"}
 
     try:
-        res = requests.get(url, headers=headers, timeout=10)
+        res = requests.post(url, data={"q": topic}, headers=headers, timeout=10)
         res.raise_for_status()
     except requests.RequestException as e:
         print(f"[ERROR] DuckDuckGo request failed: {e}")
